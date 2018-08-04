@@ -6,7 +6,7 @@ import EventListItem  from './EventListItem'
       const {events} = this.props;
     return (
       <div>
-          <h2>Event List</h2>
+      
           {events.map((event)=>(
             <EventListItem event={event} key={event.id} />
           ))}

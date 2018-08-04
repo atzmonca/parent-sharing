@@ -1,30 +1,110 @@
 import React, { Component } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { createEvent, updateEvent } from "../eventActions";
+import cuid from "cuid";
 
-export default class EventForm extends Component {
+const mapState = (state, ownProps) => {
+  const eventId = ownProps.match.params.id;
+
+  let event = {
+    title: "",
+    date: "",
+    city: "",
+    vanue: "",
+    hostedby: "",
+    attendees:[]
+  };
+
+  if (eventId && state.events.length > 0) {
+    event = state.events.filter(event => event.id === eventId)[0];
+  }
+
+  return { event };
+};
+const actions = {
+  createEvent,
+  updateEvent
+};
+
+class EventForm extends Component {
+  state = {
+    event: Object.assign({}, this.props.event)
+  };
+
+  onFormSubmit = evt => {
+    evt.preventDefault();
+    if (this.state.event.id) {
+      this.props.updateEvent(this.state.event);
+    } else {
+      const newEvent = {
+        ...this.state.event,
+        id: cuid(),
+        hostPhotoURL: "/assets/user.png"
+      };
+      this.props.createEvent(newEvent);
+      this.props.history.push('/events');
+    }
+  };
+
+  onInputChange = evt => {
+    const newEvent = this.state.event;
+    newEvent[evt.target.name] = evt.target.value;
+    this.setState({
+      event: newEvent
+    });
+  };
+
   render() {
+    const { event } = this.state;
     return (
       <Segment>
         <Form>
           <Form.Field>
             <label>Event Title</label>
-            <input placeholder="First Name" />
+            <input
+              name="title"
+              placeholder="Event Title"
+              onChange={this.onInputChange}
+              value={event.title}
+            />
           </Form.Field>
           <Form.Field>
             <label>Event Date</label>
-            <input type="date" placeholder="Event Date" />
+            <input
+              name="date"
+              type="date"
+              placeholder="Event Date"
+              onChange={this.onInputChange}
+              value={event.date}
+            />
           </Form.Field>
           <Form.Field>
             <label>City</label>
-            <input placeholder="City event is taking place" />
+            <input
+              name="city"
+              placeholder="City event is taking place"
+              onChange={this.onInputChange}
+              value={event.city}
+            />
           </Form.Field>
           <Form.Field>
             <label>Venue</label>
-            <input placeholder="Enter the Venue of the event" />
+            <input
+              name="venue"
+              placeholder="Enter the Venue of the event"
+              onChange={this.onInputChange}
+              value={event.venue}
+            />
           </Form.Field>
           <Form.Field>
             <label>Hosted By</label>
-            <input placeholder="Enter the name of person hosting" />
+            <input
+              name="hostedBy"
+              placeholder="Enter the name of person hosting"
+              onChange={this.onInputChange}
+              value={event.hostedBy}
+            />
           </Form.Field>
           <Button positive type="submit">
             Submit
@@ -35,3 +115,7 @@ export default class EventForm extends Component {
     );
   }
 }
+export default connect(
+  mapState,
+  actions
+)(EventForm);

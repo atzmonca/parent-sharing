@@ -40,12 +40,14 @@ class EventDashboard extends Component {
     });
   };
   handleFormOpen() {
+
     this.setState({
       isOpen: true
     });
   }
 
   handleCreateEvent = newEvent => {
+    
     newEvent.id = cuid();
     newEvent.hostPhotoURL = "/assets/user.png";
     this.props.createEvent(newEvent);
@@ -54,6 +56,9 @@ class EventDashboard extends Component {
     });
   };
   handleOpenEvent = eventToOpen => () => {
+
+    
+
     this.setState({
       selectedEvent: eventToOpen,
       isOpen: true
@@ -74,7 +79,7 @@ class EventDashboard extends Component {
         </Grid.Column>
         <Grid.Column width={6}>
           <Button
-            onClick={this.handleFormOpen}
+            onClick={this.handleCreateEvent}
             positive
             content="Create Event"
           />
