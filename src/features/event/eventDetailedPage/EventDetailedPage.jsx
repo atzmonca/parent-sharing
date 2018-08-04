@@ -1,12 +1,23 @@
-import React, { Component } from 'react'
+import React from "react";
+import EventDetailedChat from "./EventDetailedChat";
+import EventDetailedHeader from "./EventDetailedHeader";
+import EventDetailedInfo from "./EventDetailedInfo";
+import EventDetailedSideBar from "./EventDetailedSideBar";
+import { Grid } from "semantic-ui-react";
 
- class EventDetailedPage extends Component {
-  render() {
-    return (
-      <div>
-         <h1>EventDetailedPage Page</h1>
-      </div>
-    )
-  }
-}
-export default EventDetailedPage
+const EventDetailedPage = () => {
+  return (
+    <Grid>
+      <Grid.Column width={10}>
+        <EventDetailedHeader />
+        <EventDetailedInfo />
+        <EventDetailedChat />
+      </Grid.Column>
+
+       <Grid.Column width={6}>
+        <EventDetailedSideBar />
+      </Grid.Column>
+    </Grid>
+  );
+};
+export default EventDetailedPage;
