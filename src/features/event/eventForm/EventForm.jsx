@@ -8,6 +8,8 @@ import { reduxForm, Field } from "redux-form";
 import TextArea from "../../../app/common/form/TextArea";
 import SelectInput from "../../../app/common/form/SelectInput";
 import {composeValidators,combineValidators,isRequired ,hasLengthGreaterThan } from 'revalidate'
+import DateInput from "../../../app/common/form/DateInput";
+import moment from 'moment'
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -41,13 +43,14 @@ const validate = combineValidators({
     hasLengthGreaterThan(4)({message: ' Description need to be at least 6 characters'})
   )(),
   city: isRequired('city'),
-  venue: isRequired('venue')
+  venue: isRequired('venue'),
+  date: isRequired('date')
 })
 
 class EventForm extends Component {
   onFormSubmit = values => {
     console.log('values: ', values);
-
+values.date = moment(values.date).format()
     if (this.props.initialValues.id) {
       this.props.updateEvent(values);
     } else {
@@ -107,7 +110,10 @@ class EventForm extends Component {
               <Field
                 name="date"
                 type="text"
-                component={TextInput}
+                component={DateInput}
+                dateFormat='YYYY-MM-DD HH:mm'
+                timeFormat = 'HH:mm'
+                showTimeSelect
                 placeholder="choose a date"
               />
 
