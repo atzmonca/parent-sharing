@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { incrementCounter, decrementCounter } from "./testActions";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import Script from "react-load-script";
-import GoogleMapReact from 'google-map-react';
+import {openModal} from '../modals/modalActions'
+//import GoogleMapReact from 'google-map-react';
 
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -16,10 +17,11 @@ const mapState = state => ({
 
 const actions = {
   incrementCounter,
-  decrementCounter
+  decrementCounter,
+  openModal
 };
 
-const Marker = () => <Icon name='marker' size='big' color='red' />
+//const Marker = () => <Icon name='marker' size='big' color='red' />
 class TestComponent extends Component {
   state = {
     address: "",
@@ -52,7 +54,7 @@ class TestComponent extends Component {
   onChange = address => this.setState({ address });
 
   render() {
-    const { incrementCounter, decrementCounter, data } = this.props;
+    const { incrementCounter, decrementCounter, data ,openModal } = this.props;
     const inputProps = {
       value: this.state.address,
       onChange: this.onChange
@@ -60,7 +62,7 @@ class TestComponent extends Component {
     return (
 
        // Important! Always set the container height explicitly
-       <div style={{ height: '300px', width: '100%' }}>
+  /*      <div style={{ height: '300px', width: '100%' }}>
        <GoogleMapReact
          bootstrapURLKeys={{ key: 'AIzaSyCBqywI9t9B1zntTVfaUoX3LAyevgywtzE' }}
          defaultCenter={this.props.center}
@@ -71,10 +73,10 @@ class TestComponent extends Component {
            lng={30.337844}
            text={'Kreyser Avrora'}
          />
-       </GoogleMapReact>
-     </div>
+       </GoogleMapReact> 
+     </div>*/
 
-    /*   <div>
+      <div>
         <Script
           url="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBqywI9t9B1zntTVfaUoX3LAyevgywtzE&libraries=places"
           onLoad={this.handleScriptLoaded}
@@ -87,6 +89,11 @@ class TestComponent extends Component {
           Decrement
         </Button>
 
+        <Button color="teal" content="Open Modal"
+         onClick={()=> openModal('TestModal',{data:43})} >
+        
+        </Button>
+
         <br />
         <br />
         <form onSubmit={this.handleFormSubmit}>
@@ -94,7 +101,7 @@ class TestComponent extends Component {
           <PlacesAutocomplete inputProps={inputProps} />}
           <button type="submit">Submit</button>
         </form>
-      </div> */
+      </div> 
     );
   }
 }
