@@ -68,6 +68,8 @@ class EventDashboard extends Component {
   render() {
     const { selectedEvent } = this.state;
     const { events } = this.props;
+    console.log('render ev dashboard this.props: ' , this.props);
+    
     return (
       <Grid>
         <Grid.Column width={10}>

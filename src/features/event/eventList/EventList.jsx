@@ -3,6 +3,8 @@ import EventListItem  from './EventListItem'
 
  class EventList extends Component {
   render() {
+    console.log('ev list render props: ', this.props);
+    
       const {events} = this.props;
     return (
       <div>
