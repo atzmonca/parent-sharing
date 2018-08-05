@@ -60,6 +60,10 @@ import { CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT } from "./eventConstants";
   ];
 
 
+export const createEvent = (state, payload) => {
+  return [...state, Object.assign({}, payload.event)];
+};
+
 export const updateEvent = (state, payload) => {
   return [
     ...state.filter(event => event.id !== payload.event.id),
